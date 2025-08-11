@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Error</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #e0e0e0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Subtle noise background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Glitch Container */
+        .glitch-container {
+            position: relative;
+            margin: 40px 0;
+            min-height: 120px;
+        }
+
+        /* Glitch Effect - Base Text */
+        .glitch-base {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(4rem, 10vw, 12rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            text-shadow: 
+                0 0 10px rgba(58, 175, 169, 0.7),
+                0 0 20px rgba(58, 175, 169, 0.5);
+            position: relative;
+            z-index: 3;
+            animation: pulse 4s infinite alternate;
+        }
+
+        /* Glitch Layers */
+        .glitch-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(4rem, 10vw, 12rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+        }
+
+        .glitch-red {
+            color: #ff3e3e;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            animation: glitch-red 5s infinite;
+            text-shadow: 2px 0 0 #ff0000;
+            z-index: 1;
+        }
+
+        .glitch-cyan {
+            color: #00ffff;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            animation: glitch-cyan 4s infinite;
+            text-shadow: -2px 0 0 #00ffff;
+            z-index: 2;
+        }
+
+        /* Glitch Animations */
+        @keyframes glitch-red {
+            0%, 100% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            2% {
+                transform: translate(-8px, 0);
+                clip-path: polygon(0 0, 85% 0, 85% 45%, 0 45%);
+            }
+            4% {
+                transform: translate(8px, 0);
+                clip-path: polygon(15% 55%, 100% 55%, 100% 100%, 15% 100%);
+            }
+            6% {
+                transform: translate(-6px, 0);
+                clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+            }
+            8% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        @keyframes glitch-cyan {
+            0%, 100% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            3% {
+                transform: translate(6px, 0);
+                clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+            }
+            5% {
+                transform: translate(-6px, 0);
+                clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+            }
+            7% {
+                transform: translate(4px, 0);
+                clip-path: polygon(0 50%, 100% 50%, 100% 70%, 0 70%);
+            }
+            9% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                text-shadow: 
+                    0 0 10px rgba(58, 175, 169, 0.7),
+                    0 0 20px rgba(58, 175, 169, 0.5);
+            }
+            100% {
+                text-shadow: 
+                    0 0 15px rgba(58, 175, 169, 0.9),
+                    0 0 30px rgba(58, 175, 169, 0.7),
+                    0 0 40px rgba(58, 175, 169, 0.5);
+            }
+        }
+
+        /* Error Message */
+        .error-message {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin: 20px 0 40px;
+            color: #a0a0a0;
+            max-width: 800px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        .error-message strong {
+            color: #3AAFA9;
+            text-shadow: 0 0 10px rgba(58, 175, 169, 0.3);
+        }
+
+        /* Return Button */
+        .return-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #3AAFA9 0%, #2BA6A6 100%);
+            color: #0a0a0a;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 14px 35px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 4px 15px rgba(58, 175, 169, 0.4),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .return-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 6px 20px rgba(58, 175, 169, 0.6),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #4DB6AC 0%, #38A1A1 100%);
+        }
+
+        .return-btn:active {
+            transform: translateY(1px);
+        }
+
+        .return-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+
+        .return-btn:hover::after {
+            left: 120%;
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff3e3e;
+            box-shadow: 0 0 10px #ff0000;
+            animation: status-pulse 2s infinite;
+        }
+
+        .status-dot:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .status-dot:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes status-pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .glitch-container {
+                min-height: 100px;
+            }
+            
+            .glitch-base,
+            .glitch-layer {
+                font-size: clamp(3rem, 12vw, 8rem) !important;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+                margin: 15px 0 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <div class="status-dot"></div>
+            <div class="status-dot"></div>
+        </div>
+        
+        <div class="glitch-container">
+            <div class="glitch-layer glitch-red">SYSTEM MALFUNCTION</div>
+            <div class="glitch-layer glitch-cyan">SYSTEM MALFUNCTION</div>
+            <div class="glitch-base">SYSTEM MALFUNCTION</div>
+        </div>
+        
+        <p class="error-message">
+            A critical error has occurred in the <strong>neural processing core</strong>. 
+            The system has entered safe mode to prevent further corruption. 
+            Please return to the login screen to restart the connection sequence.
+        </p>
+        
+        <a href="/" class="return-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+            Return to Login
+        </a>
+    </div>
+    
+    <footer>
+        ERROR 500: Neural Network Overload | Secure System v3.7.1
+    </footer>
+</body>
+</html>

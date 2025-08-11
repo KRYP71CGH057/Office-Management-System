@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Authentication Error - FileBoss</title>
+    <style>
+        :root {
+            --primary-dark: #17252A;
+            --primary: #2B7A78;
+            --primary-light: #3AAFA9;
+            --accent: #DEF2F1;
+            --danger: #FF6B6B;
+            --danger-dark: #d94c4c;
+            --success: #4CAF50;
+            --warning: #FFC107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(23, 37, 42, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(222, 242, 241, 0.2);
+        }
+        
+        .header {
+            background: rgba(23, 37, 42, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .title {
+            color: var(--accent);
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 30px;
+            position: relative;
+        }
+        
+        .error-container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .error-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent);
+            position: relative;
+            z-index: 2;
+            padding: 15px 30px;
+            background: rgba(23, 37, 42, 0.7);
+            border-radius: 10px;
+            letter-spacing: 2px;
+        }
+        
+        .error-text::before,
+        .error-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .error-text::before {
+            color: var(--danger);
+            animation: glitch 3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+        
+        .error-text::after {
+            color: var(--warning);
+            animation: glitch 2s infinite reverse;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+        
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+            }
+            40% {
+                transform: translate(-5px, -5px);
+            }
+            60% {
+                transform: translate(5px, 5px);
+            }
+            80% {
+                transform: translate(5px, -5px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+        
+        .message {
+            color: var(--accent);
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            background: rgba(23, 37, 42, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid var(--danger);
+        }
+        
+        .message p {
+            margin-bottom: 10px;
+        }
+        
+        .icon {
+            margin-right: 10px;
+            color: var(--danger);
+        }
+        
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .return-btn {
+            background: var(--primary-light);
+            color: var(--accent);
+            box-shadow: 0 4px 0 rgba(43, 122, 120, 0.8);
+        }
+        
+        .return-btn:hover {
+            background: #2c8d8a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(43, 122, 120, 0.8);
+        }
+        
+        .return-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 rgba(43, 122, 120, 0.8);
+        }
+        
+        .signup-btn {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 4px 0 var(--danger-dark);
+        }
+        
+        .signup-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 var(--danger-dark);
+        }
+        
+        .signup-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--danger-dark);
+        }
+        
+        .footer {
+            padding: 20px;
+            text-align: center;
+            color: rgba(222, 242, 241, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(222, 242, 241, 0.2);
+            background: rgba(23, 37, 42, 0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .error-text {
+                font-size: 2.5rem;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .error-text {
+                font-size: 2rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+        }
+        
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to bottom, rgba(222, 242, 241, 0.1), rgba(222, 242, 241, 0.4), rgba(222, 242, 241, 0.1));
+            animation: scan 4s linear infinite;
+            opacity: 0.6;
+            z-index: 1;
+        }
+        
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">FB</div>
+                <h1 class="title">FileBoss</h1>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="scan-line"></div>
+            
+            <div class="error-container">
+                <h2 class="error-text" data-text="Token Error">Token Error</h2>
+            </div>
+            
+            <div class="message">
+                <p><span class="icon">⚠️</span> The authentication token you provided is invalid or has expired.</p>
+                <p>This can happen if:</p>
+                <ul style="text-align: left; margin: 15px 0; padding-left: 30px;">
+                    <li>The token was entered incorrectly</li>
+                    <li>The token has expired</li>
+                    <li>You've already used this token</li>
+                    <li>There was a system error</li>
+                </ul>
+                <p>Please try again or sign up for a new account.</p>
+            </div>
+            
+            <div class="btn-container">
+                <a href="/" class="btn return-btn">Try Again</a>
+                <a href="/signup" class="btn signup-btn">Create New Account</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Need help? Contact support@fileboss.com</p>
+            <p>&copy; 2023 FileBoss. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

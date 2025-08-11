@@ -1,0 +1,44 @@
+ECHO is on.
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.db
+*.sqlite
+
+# Database files
+database.db
+files/
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.venv/
+.venv.local
+.venv.development
+.venv.test
+.venv.production
+
+# Logs
+*.log
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+    <style>
+        :root {
+            --primary: #3AAFA9;
+            --primary-dark: #2B7A78;
+            --secondary: #DEF2F1;
+            --dark: #17252A;
+            --light: #FEFFFF;
+            --danger: #EF476F;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #17252A, #2B7A78, #3AAFA9);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary);
+            background: var(--card-bg);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-home {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .btn-signout {
+            background: rgba(222, 242, 241, 0.2);
+            color: var(--secondary);
+            backdrop-filter: blur(4px);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--light);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--secondary);
+        }
+        
+        .card-body {
+            padding: 40px;
+        }
+        
+        .form-container {
+            background: rgba(254, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(222, 242, 241, 0.3);
+        }
+        
+        .form-group {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        select {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            font-size: 1.1rem;
+            background: white;
+            color: var(--dark);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 3px rgba(58, 175, 169, 0.2);
+        }
+        
+        .btn-delete {
+            background: var(--danger);
+            color: white;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 16px;
+            font-size: 1.2rem;
+            border: none;
+            transition: all 0.3s;
+            display: block;
+        }
+        
+        .btn-delete:hover {
+            background: #d62d54;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(239, 71, 111, 0.4);
+        }
+        
+        .users-section h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--dark);
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .users-section h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .user-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(222, 242, 241, 0.5);
+        }
+        
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+        
+        .user-content {
+            padding: 25px;
+        }
+        
+        .user-name {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-name:before {
+            content: "•";
+            color: var(--primary);
+            font-size: 2rem;
+            line-height: 0.5;
+        }
+        
+        .user-id {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p {
+            color: #777;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--secondary);
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 25px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card-header, .card-body {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://placehold.co/60x60/3AAFA9/FFFFFF?text=LOGO" alt="Logo">
+                <div class="logo-text">Admin Panel</div>
+            </div>
+            <div class="header-buttons">
+                <a href="/AdminMainPage" class="btn btn-home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                        <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                        <path d="M5 8a2 2 0 1 1 4 0v5a2 2 0 1 1-4 0V8Zm2-3a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/>
+                    </svg>
+                    Home
+                </a>
+                <a href="/" class="btn btn-signout">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M12 1a11 11 0 1 1-3.524 21.022q.406.22.849.41A10 10 0 1 0 12 1Zm0 18.278A8 8 0 1 1 12 3a8 8 0 0 1 0 16.278Z"/>
+                        <path d="M8.5 6.5a.5.5 0 0 0-1 0V8H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V9H10a.5.5 0 0 0 0-1H8.5V6.5Z"/>
+                    </svg>
+                    Sign Out
+                </a>
+            </div>
+        </header>
+
+        <main class="content-card">
+            <div class="card-header">
+                <h1>Delete User</h1>
+                <p class="subtitle">Select a user from the list below to permanently remove their account</p>
+            </div>
+            
+            <div class="card-body">
+                <div class="form-container">
+                    <form method="POST" class="form-group">
+                        <label for="work_id">Select a user to delete:</label>
+                        <select name="work_id" id="work_id">
+                            {% for user in users %}
+                            <option value="{{ user[0] }}">{{ user[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-delete" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                            Delete User
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="users-section">
+                    <h2>Active Users</h2>
+                    <div class="users-grid">
+                        {% if users|length == 0 %}
+                        <div class="empty-state">
+                            <h3>No users found</h3>
+                            <p>There are currently no users in the system. New users will appear here once they register.</p>
+                        </div>
+                        {% else %}
+                        {% for user in users %}
+                        <div class="user-card">
+                            <div class="user-content">
+                                <div class="user-name">{{ user[1] }}</div>
+                                <div class="user-id">ID: {{ user[0] }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Admin Panel &copy; 2025 | User Management System</p>
+        </footer>
+    </div>
+</body>
+</html>
